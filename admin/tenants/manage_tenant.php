@@ -79,12 +79,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                     <input type="text" name="id_no" id="id_no" class="form-control rounded-0" value="<?php echo isset($id_no) ? $id_no :"" ?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="id_no" class="control-label">Tenancy Agreement</label>
-                    
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input rounded-circle" id="customFile" name="tenancy_agreement" onchange="displayImg(this,$(this))">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
-                    </div>
+                    <label for="id_no" class="control-label"> Tenancy Agreement</label>
+                    <input type="file" class="form-control rounded-0" name="tenancy_agreement" />
                 </div>
             </div>
         </div>
