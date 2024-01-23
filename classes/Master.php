@@ -151,7 +151,7 @@ Class Master extends DBConnection {
 			return $this->capture_err();
 		if($check > 0){
 			$resp['status'] = 'failed';
-			$resp['msg'] = "Tenant already exist.";
+			$resp['msg'] = "Tenant already exist.".$id_no;
 			return json_encode($resp);
 			exit;
 		}
@@ -233,12 +233,12 @@ Class Master extends DBConnection {
 			}
 		}
 
-		$check = $this->conn->query("SELECT * FROM `pettycash` where  id != '{$id}'")->num_rows;
+		$check = $this->conn->query("SELECT * FROM `pettycash` where  id = '{$id}'")->num_rows;
 		if($this->capture_err())
 			return $this->capture_err();
 		if($check > 0){
 			$resp['status'] = 'failed';
-			$resp['msg'] = "Transaction already exist.";
+			$resp['msg'] = "Transaction already exist.".$id;
 			return json_encode($resp);
 			exit;
 		}

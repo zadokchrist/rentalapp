@@ -21,7 +21,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
     }
 </style>
 <form action="" id="tenant-form">
-     <input type="text" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+     <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -80,6 +80,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                 </div>
                 <div class="form-group">
                     <label for="id_no" class="control-label">Tenancy Agreement</label>
+                    
                     <div class="custom-file">
                       <input type="file" class="custom-file-input rounded-circle" id="customFile" name="tenancy_agreement" onchange="displayImg(this,$(this))">
                       <label class="custom-file-label" for="customFile">Choose file</label>
