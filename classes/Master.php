@@ -271,21 +271,28 @@ Class Master extends DBConnection {
 				$data .= " `{$k}`='{$v}' ";
 			}
 		}
-		// $check = $this->conn->query("SELECT * FROM `tenants` where `id_type` = '{$id_type}' and `id_no` = '{$id_no}' ".(!empty($id) ? " and id != {$id} " : "")." ")->num_rows;
+		// check if status of the complaint is set.
+			// Define the pattern to match `Status` and its value
+		$pattern = "/`Status`='([^']+)'/";
+			// Perform the regular expression match
+		preg_match($pattern, $data, $matches);
 		if($this->capture_err())
 			return $this->capture_err();
-		// if($check > 0){
-		// 	$resp['status'] = 'failed';
-		// 	$resp['msg'] = "Tenant already exist.";
-		// 	return json_encode($resp);
-		// 	exit;
-		// }
 		if(empty($id)){
 			$sql = "INSERT INTO `complaints` set {$data} ";
 			$save = $this->conn->query($sql);
 		}else{
-			$sql = "UPDATE `complaints` set {$data} where Complaintid = '{$id}' ";
-			$save = $this->conn->query($sql);
+			
+			if (isset($matches[1])) {
+				$sql = "UPDATE `complaints` set {$data} where Complaintid = '{$id}' ";
+				$save = $this->conn->query($sql);
+			}else{
+				$resp['status'] = 'failed';
+				$resp['msg'] = "Please select Status of the complaint.";
+				return json_encode($resp);
+				exit;
+			}
+			
 		}
 		if($save){
 			$resp['status'] = 'success';
