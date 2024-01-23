@@ -1,0 +1,4 @@
+<FilesMatch "\.(zip|pdf|docx|jpg|jpeg|png|gif)$">
+    Header set Content-Disposition "attachment"
+    Header set X-Content-Type-Options "nosniff"
+</FilesMatch>
