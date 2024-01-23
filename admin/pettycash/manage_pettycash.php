@@ -21,7 +21,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
     }
 </style>
 <form action="" id="tenant-form">
-     <input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+     <input type="hidden" name="id" value="<?php echo isset($Id) ? $Id : '' ?>">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">

@@ -233,15 +233,9 @@ Class Master extends DBConnection {
 			}
 		}
 
-		$check = $this->conn->query("SELECT * FROM `pettycash` where  id = '{$id}'")->num_rows;
+		
 		if($this->capture_err())
 			return $this->capture_err();
-		if($check > 0){
-			$resp['status'] = 'failed';
-			$resp['msg'] = "Transaction already exist.".$id;
-			return json_encode($resp);
-			exit;
-		}
 		if(empty($id)){
 			$sql = "INSERT INTO `pettycash` set {$data} ";
 			$save = $this->conn->query($sql);
@@ -312,6 +306,19 @@ Class Master extends DBConnection {
 		if($del){
 			$resp['status'] = 'success';
 			$this->settings->set_flashdata('success',"tenant successfully deleted.");
+		}else{
+			$resp['status'] = 'failed';
+			$resp['error'] = $this->conn->error;
+		}
+		return json_encode($resp);
+
+	}
+	function delete_pettycash(){
+		extract($_POST);
+		$del = $this->conn->query("DELETE FROM `pettycash` where id = '{$id}'");
+		if($del){
+			$resp['status'] = 'success';
+			$this->settings->set_flashdata('success',"Transaction successfully deleted.");
 		}else{
 			$resp['status'] = 'failed';
 			$resp['error'] = $this->conn->error;
@@ -483,6 +490,9 @@ switch ($action) {
 	break;
 	case 'save_pettycash':
 	echo $Master->save_pettycash();
+	break;
+	case 'delete_pettycash':
+	echo $Master->delete_pettycash();
 	break;
 	case 'delete_tenant':
 	echo $Master->delete_tenant();
