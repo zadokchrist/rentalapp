@@ -74,7 +74,7 @@
 										$currentDateObj = new DateTime($currentDate);
 										$enddateObj = new DateTime(date("Y-m-d",strtotime($row['date_end'])));
 										 // Compare dates
-										if ($enddateObj>$currentDateObj) {
+										if ($currentDateObj>$enddateObj) {
 											echo '<span class="badge badge-danger">Overdue</span>';
 										} else {
 											echo '<span class="badge badge-success">Active</span>';
