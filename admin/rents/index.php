@@ -1,7 +1,7 @@
 <?php if($_settings->chk_flashdata('success')): ?>
-<script>
-	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
-</script>
+	<script>
+		alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
+	</script>
 <?php endif;?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
@@ -12,90 +12,98 @@
 	</div>
 	<div class="card-body">
 		<div class="container-fluid">
-        <div class="container-fluid">
-			<table class="table table-hover table-striped">
-				<colgroup>
-					<col width="5%">
-					<col width="15%">
-					<col width="15%">
-					<col width="20%">
-					<col width="20%">
-					<col width="15%">
-					<col width="10%">
-				</colgroup>
-				<thead>
-					<tr class="bg-navy disabled">
-						<th>#</th>
-						<th>Date Rented</th>
-						<th>Unit #</th>
-						<th>Tenant Name</th>
-						<th>Details</th>
-						<th>Status</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-					$i = 1;
+			<div class="container-fluid">
+				<table class="table table-hover table-striped">
+					<colgroup>
+						<col width="5%">
+						<col width="15%">
+						<col width="15%">
+						<col width="20%">
+						<col width="20%">
+						<col width="15%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr class="bg-navy disabled">
+							<th>#</th>
+							<th>Date Rented</th>
+							<th>Unit #</th>
+							<th>Tenant Name</th>
+							<th>Details</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
+						$i = 1;
 						$qry = $conn->query("SELECT r.*,u.unit_number, t.fullname FROM `rent_list` r inner join unit_list u on r.unit_id = u.id inner join tenants t on r.tenant_id = t.id order by unix_timestamp(r.date_created) desc ");
 						while($row = $qry->fetch_assoc()):
-					?>
-						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
-							<td class=""><?php echo date("M d,Y",strtotime($row['date_created'])) ; ?></td>
-							<td class=""><?php echo $row['unit_number'] ?></td>
-							<td class=""><?php echo $row['fullname'] ?></td>
-							<td>
-								<small>Type: 
-								<?php 
-									switch ($row['rent_type']) {
-										case '1':
+							?>
+							<tr>
+								<td class="text-center"><?php echo $i++; ?></td>
+								<td class=""><?php echo date("M d,Y",strtotime($row['date_created'])) ; ?></td>
+								<td class=""><?php echo $row['unit_number'] ?></td>
+								<td class=""><?php echo $row['fullname'] ?></td>
+								<td>
+									<small>Type: 
+										<?php 
+										switch ($row['rent_type']) {
+											case '1':
 											echo 'Montly';
 											break;
-										case '2':
-												echo 'Quarterly';
+											case '2':
+											echo 'Quarterly';
 											break;
-										case '3':
+											case '3':
 											echo 'Annually';
 											break;
-										default:
+											default:
 											# code...
 											break;
-									}
-								?>
-								</small><br>
-								<small>End Date: <?php echo date("M d, Y",strtotime($row['date_end'])) ?></small>
-							</td>
-							<td>
-								<?php 
+										}
+										?>
+									</small><br>
+									<small>End Date: <?php echo date("M d, Y",strtotime($row['date_end'])) ?></small>
+								</td>
+								<td>
+									<?php 
 									switch ($row['status']) {
 										case '1':
+										$currentDate = date("Y-m-d");  // Use current date
+										$currentDateObj = new DateTime($currentDate);
+										$enddateObj = new DateTime(date("Y-m-d",strtotime($row['date_end'])));
+										 // Compare dates
+										if ($enddateObj>$currentDateObj) {
+											echo '<span class="badge badge-danger">Overdue</span>';
+										} else {
 											echo '<span class="badge badge-success">Active</span>';
-											break;
+										}
+										break;
 										default:
-											echo '<span class="badge badge-danger">Inactive</span>';
-											break;
+										echo '<span class="badge badge-danger">Inactive</span>';
+										break;
 									}
-								?>
-							</td>
-							<td align="center">
-								 <button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
-				                  		Action
-				                    <span class="sr-only">Toggle Dropdown</span>
-				                  </button>
-				                  <div class="dropdown-menu" role="menu">
-				                    <a class="dropdown-item" href="?page=rents/manage_rent&id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
-				                    <div class="dropdown-divider"></div>
-									 <a class="dropdown-item renew_data" href="javascript:void(0)" data-id= "<?php echo $row['id'] ?>"><span class="fa fa-retweet text-primary"></span> Renew</a>
-				                    <div class="dropdown-divider"></div>
-				                    <a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
-				                  </div>
-							</td>
-						</tr>
-					<?php endwhile; ?>
-				</tbody>
-			</table>
-		</div>
+									?>
+								</td>
+								<td align="center">
+									<button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
+										Action
+										<span class="sr-only">Toggle Dropdown</span>
+									</button>
+									<div class="dropdown-menu" role="menu">
+										<a class="dropdown-item" href="?page=rents/manage_rent&id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item renew_data" href="javascript:void(0)" data-id= "<?php echo $row['id'] ?>"><span class="fa fa-retweet text-primary"></span> Renew</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item delete_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-trash text-danger"></span> Delete</a>
+									</div>
+								</td>
+							</tr>
+						<?php endwhile; ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

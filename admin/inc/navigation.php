@@ -47,6 +47,14 @@
                         </p>
                       </a>
                     </li>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=payments" class="nav-link nav-payments">
+                        <i class="nav-icon fas fa-money"></i>
+                        <p>
+                          Payments
+                        </p>
+                      </a>
+                    </li>
                      <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=complaints" class="nav-link nav-complaints">
                         <i class="nav-icon fas fa-exclamation"></i>
