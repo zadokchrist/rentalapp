@@ -48,7 +48,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0){
                     <label for="marritalstatus" class="control-label">Marital Status</label>
                     <select name="marritalstatus" id="marritalstatus" class="form-control rounded-0" required>
                         <option value="" selected>Please Status</option>
-                        <option value="Married" <?php echo isset($marritalstatus) && $idmarritalstatus_type =="" ? "selected": "Married" ?> >Married</option>
+                        <option value="Married" <?php echo isset($marritalstatus) && $marritalstatus =="" ? "selected": "Married" ?> >Married</option>
                         <option value="Passport" <?php echo isset($marritalstatus) && $marritalstatus =="" ? "selected": "Passport" ?>>Single</option>
                     </select>
                 </div>
