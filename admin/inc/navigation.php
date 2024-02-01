@@ -47,14 +47,7 @@
                         </p>
                       </a>
                     </li>
-                    <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=payments" class="nav-link nav-payments">
-                        <i class="nav-icon fas fa-money"></i>
-                        <p>
-                          Payments
-                        </p>
-                      </a>
-                    </li>
+                    
                      <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=complaints" class="nav-link nav-complaints">
                         <i class="nav-icon fas fa-exclamation"></i>
@@ -68,6 +61,23 @@
                         <i class="nav-icon fas fa-file-contract"></i>
                         <p>
                           Rent List
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-header">Reports</li>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=payments" class="nav-link nav-payments">
+                        <i class="nav-icon fas fa-money"></i>
+                        <p>
+                          Payments
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=payments/collections" class="nav-link nav-maintenance_storage_units">
+                        <i class="nav-icon fas fa-usd"></i>
+                        <p>
+                           Collections Report
                         </p>
                       </a>
                     </li>

@@ -37,7 +37,7 @@
 					<tbody>
 						<?php 
 						$i = 1;
-						$qry = $conn->query("SELECT r.*,u.unit_number, t.fullname FROM `rent_list` r inner join unit_list u on r.unit_id = u.id inner join tenants t on r.tenant_id = t.id order by unix_timestamp(r.date_created) desc ");
+						$qry = $conn->query("SELECT r.*,u.unit_number, t.fullname,t.id as tenant_id FROM `rent_list` r inner join unit_list u on r.unit_id = u.id inner join tenants t on r.tenant_id = t.id order by unix_timestamp(r.date_created) desc ");
 						while($row = $qry->fetch_assoc()):
 							?>
 							<tr>
@@ -92,6 +92,10 @@
 										<span class="sr-only">Toggle Dropdown</span>
 									</button>
 									<div class="dropdown-menu" role="menu">
+										<a class="dropdown-item view_tenant_data" href="javascript:void(0)" data-id = "<?php echo $row['tenant_id'] ?>"><span class="fa fa-info text-primary"></span>Tenants Details</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item view_property_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-info text-primary"></span> Property Details</a>
+				                    <div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="?page=rents/manage_rent&id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item renew_data" href="javascript:void(0)" data-id= "<?php echo $row['id'] ?>"><span class="fa fa-retweet text-primary"></span> Renew</a>
@@ -114,6 +118,12 @@
 		})
 		$('.view_details').click(function(){
 			uni_modal("Reservaton Details","rents/view_details.php?id="+$(this).attr('data-id'),'mid-large')
+		})
+		$('.view_tenant_data').click(function(){
+			uni_modal("<i class='fa fa-info-circle'></i> Tenant's Details","tenants/view_details.php?id="+$(this).attr('data-id'),"")
+		})
+		$('.view_property_data').click(function(){
+			uni_modal("<i class='fa fa-info-circle'></i> Property Details","rents/propertydetails.php?id="+$(this).attr('data-id'),"mid-large")
 		})
 		$('.renew_data').click(function(){
 			_conf("Are you sure to renew this rent data?","renew_rent",[$(this).attr('data-id')]);

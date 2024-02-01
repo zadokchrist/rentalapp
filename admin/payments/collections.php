@@ -5,7 +5,7 @@
 <?php endif;?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
-		<h3 class="card-title">List of Payments</h3>
+		<h3 class="card-title">Collections Per Month</h3>
 		<!-- <div class="card-tools">
 			<a href="javascript:void(0)" id="create_new" class="btn btn-flat btn-primary"><span class="fas fa-plus"></span>  Register New</a>
 		</div> -->
@@ -24,13 +24,10 @@
 				</colgroup>
 				<thead>
 					<tr class="bg-navy disabled">
-						<th>Transaction Id</th>
-						<th>Transaction Date</th>
-						<th>Channel of Payment</th>
-						<th>Tenant Name</th>
-						<th>Amount #</th>
-						<!-- <th>Balance</th> -->
-						<!-- <th>Action</th> -->
+						<th>Month</th>
+						<th>Number of Payments</th>
+						<th>Total Transaction Value</th>
+						<th>Total Outstanding</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,8 +41,6 @@
 							<td><?php echo date("Y-m-d",strtotime($row['DateOfExpenditure'])) ?></td>
 							<td><?php echo $row['DetailsOfExpenditure'] ?></td>
 							<td><?php echo $row['Amount'] ?></td>
-							<td class='truncate-3'><?php echo $row['Balance'] ?></td>
-							<td class='truncate-3'><?php echo $row['Balance'] ?></td>
 						</tr>
 					<?php endwhile; ?>
 				</tbody>
