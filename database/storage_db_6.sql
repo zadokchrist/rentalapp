@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2024 at 10:41 AM
+-- Generation Time: Jan 30, 2024 at 06:08 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -72,20 +72,6 @@ CREATE TABLE `complaints` (
 
 INSERT INTO `complaints` (`ComplaintId`, `Unit_id`, `Priority`, `Subject`, `Status`, `compdet`, `ComplaintDate`, `ResolutionTime`, `Resolution`, `ResolvedBy`) VALUES
 (2, 1, 'High', 'FAULTY ELEVATOR', 'Resolved', 'Faulty Elevator', '2024-01-12 10:32:02', '0000-00-00 00:00:00', 'its resolved', '');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customerpayments`
---
-
-CREATE TABLE `customerpayments` (
-  `TransactionId` int(11) NOT NULL,
-  `TransactionDate` date NOT NULL DEFAULT current_timestamp(),
-  `PaymentChannel` varchar(100) NOT NULL DEFAULT 'CASH',
-  `Tenant_Id` varchar(200) NOT NULL,
-  `Amount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -227,7 +213,7 @@ INSERT INTO `rent_list` (`id`, `unit_id`, `tenant_id`, `rent_type`, `date_rented
 (40, 33, 36, 3, '2023-06-01', '2024-06-01', 1, 10800000, '2024-01-25 15:51:14', NULL),
 (41, 34, 0, 1, '2024-05-01', '2024-06-01', 1, 700000, '2024-01-25 15:52:42', NULL),
 (42, 34, 37, 1, '2024-05-15', '2024-06-15', 1, 700000, '2024-01-25 15:55:51', NULL),
-(43, 45, 49, 1, '2023-12-01', '2024-01-01', 1, 1100000, '2024-01-25 15:56:47', '2024-02-13 12:40:05');
+(43, 45, 49, 1, '2023-11-01', '2023-12-01', 1, 1100000, '2024-01-25 15:56:47', NULL);
 
 -- --------------------------------------------------------
 
@@ -305,7 +291,7 @@ INSERT INTO `tenants` (`id`, `fullname`, `gender`, `Occupation`, `contact`, `mar
 (34, 'NATAMBA PENELOPE', 'Male', 'Business Lady', '0776745442', '', '', 'Passport', 'Individual', '24', '', '2024-01-25 14:46:10', '2024-01-25 15:21:26'),
 (35, 'NALUBEGA ROSE', 'Male', 'Business Lady', '0754003984', '', '', 'Passport', 'Individual', '25', '', '2024-01-25 14:47:03', '2024-01-25 15:21:17'),
 (36, 'INTEGRATED COMMUNITY INTITATIVE(KODI)', 'Male', '', '0752801674', 'Passport', '', '', 'Company', '26', '', '2024-01-25 15:20:57', NULL),
-(37, 'HILLARY MUTABAZI', 'Male', 'Engineer', '0772572709', 'Married', '', '', 'Individual', '39', '', '2024-01-25 15:22:58', '2024-01-30 08:21:21'),
+(37, 'HILLARY MUTABAZI', 'Male', 'Engineer', '0772572709', 'Married', '', '', 'Individual', '', '', '2024-01-25 15:22:58', NULL),
 (38, 'KAHANGUZI ELIGOUS.', 'Male', 'Engineer', '0772303379', 'Married', '', '', 'Individual', '27', '', '2024-01-25 15:23:57', NULL),
 (39, 'NATUMANYA PATIENCE', 'Female', 'Nurse', '0708343394', 'Passport', '', '', 'Individual', '28', '', '2024-01-25 15:24:49', NULL),
 (40, 'RUWAGGA DANIEL', 'Male', 'Engineer', '0772563487', 'Passport', '', '', 'Individual', '29', '', '2024-01-25 15:25:28', NULL),
@@ -427,12 +413,6 @@ ALTER TABLE `complaints`
   ADD PRIMARY KEY (`ComplaintId`);
 
 --
--- Indexes for table `customerpayments`
---
-ALTER TABLE `customerpayments`
-  ADD PRIMARY KEY (`TransactionId`);
-
---
 -- Indexes for table `pettycash`
 --
 ALTER TABLE `pettycash`
@@ -489,12 +469,6 @@ ALTER TABLE `agencies`
 --
 ALTER TABLE `complaints`
   MODIFY `ComplaintId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `customerpayments`
---
-ALTER TABLE `customerpayments`
-  MODIFY `TransactionId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `pettycash`

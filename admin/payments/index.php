@@ -36,16 +36,15 @@
 				<tbody>
 					<?php 
 					$i = 1;
-					$qry = $conn->query("SELECT * from `pettycash` ");
+					$qry = $conn->query("SELECT `TransactionId`, `TransactionDate`, `PaymentChannel`, t.fullname as TenantName, `Amount` FROM `customerpayments` cp inner join tenants t on cp.Tenant_Id=t.id  ");
 					while($row = $qry->fetch_assoc()):
 					?>
 						<tr>
 							<td class="text-center"><?php echo $i++; ?></td>
-							<td><?php echo date("Y-m-d",strtotime($row['DateOfExpenditure'])) ?></td>
-							<td><?php echo $row['DetailsOfExpenditure'] ?></td>
-							<td><?php echo $row['Amount'] ?></td>
-							<td class='truncate-3'><?php echo $row['Balance'] ?></td>
-							<td class='truncate-3'><?php echo $row['Balance'] ?></td>
+							<td><?php echo date("Y-m-d",strtotime($row['TransactionDate'])) ?></td>
+							<td><?php echo $row['PaymentChannel'] ?></td>
+							<td><?php echo $row['TenantName'] ?></td>
+							<td class='truncate-3'><?php echo $row['Amount'] ?></td>
 						</tr>
 					<?php endwhile; ?>
 				</tbody>

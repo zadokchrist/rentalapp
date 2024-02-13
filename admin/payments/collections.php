@@ -1,7 +1,7 @@
 <?php if($_settings->chk_flashdata('success')): ?>
-<script>
-	alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
-</script>
+	<script>
+		alert_toast("<?php echo $_settings->flashdata('success') ?>",'success')
+	</script>
 <?php endif;?>
 <div class="card card-outline card-primary">
 	<div class="card-header">
@@ -12,40 +12,54 @@
 	</div>
 	<div class="card-body">
 		<div class="container-fluid">
-        <div class="container-fluid">
-			<table class="table table-hover table-striped">
-				<colgroup>
-					<col width="10%">
-					<col width="15%">
-					<col width="25%">
-					<col width="15%">
-					<!-- <col width="20%"> -->
-					<!-- <col width="15%"> -->
-				</colgroup>
-				<thead>
-					<tr class="bg-navy disabled">
-						<th>Month</th>
-						<th>Number of Payments</th>
-						<th>Total Transaction Value</th>
-						<th>Total Outstanding</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-					$i = 1;
-					$qry = $conn->query("SELECT * from `pettycash` ");
-					while($row = $qry->fetch_assoc()):
-					?>
-						<tr>
-							<td class="text-center"><?php echo $i++; ?></td>
-							<td><?php echo date("Y-m-d",strtotime($row['DateOfExpenditure'])) ?></td>
-							<td><?php echo $row['DetailsOfExpenditure'] ?></td>
-							<td><?php echo $row['Amount'] ?></td>
+			<div class="container-fluid">
+				<table class="table table-hover table-striped">
+					<colgroup>
+						<col width="10%">
+						<col width="15%">
+						<col width="25%">
+						<col width="15%">
+						<!-- <col width="20%"> -->
+						<!-- <col width="15%"> -->
+					</colgroup>
+					<thead>
+						<tr class="bg-navy disabled">
+							<th>#</th>
+							<th>Month</th>
+							<th>Number of Payments</th>
+							<th>Total Transaction Value</th>
+							<th>Total Outstanding</th>
 						</tr>
-					<?php endwhile; ?>
-				</tbody>
-			</table>
-		</div>
+					</thead>
+					<tbody>
+						<?php 
+						$i = 1;
+						$qry = $conn->query("SELECT 
+							DATE_FORMAT(cp.TransactionDate, '%M') AS MonthName,
+							COUNT(cp.TransactionId) AS NumberOfPayments,
+							SUM(cp.Amount) AS TotalTransactionValue,
+							(SUM(rl.billing_amount) - SUM(cp.Amount)) AS OutstandingBalance
+							FROM 
+							customerpayments cp
+							INNER JOIN 
+							rent_list rl ON cp.Tenant_Id = rl.tenant_id
+							WHERE 
+							MONTH(cp.TransactionDate) = MONTH(rl.date_end)
+							GROUP BY 
+							MONTH(cp.TransactionDate); ");
+						while($row = $qry->fetch_assoc()):
+							?>
+							<tr>
+								<td class="text-center"><?php echo $i++; ?></td>
+								<td><?php echo $row['MonthName'] ?></td>
+								<td><?php echo $row['NumberOfPayments'] ?></td>
+								<td><?php echo $row['TotalTransactionValue'] ?></td>
+								<td><?php echo $row['OutstandingBalance'] ?></td>
+							</tr>
+						<?php endwhile; ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

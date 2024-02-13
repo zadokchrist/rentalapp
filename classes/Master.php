@@ -452,9 +452,26 @@ Class Master extends DBConnection {
 			break;
 		}
 		$update = $this->conn->query("UPDATE `rent_list` set {$date_end}, date_rented = date_end where id = '{$id}' ");
+		$customerpayment = $this->conn->query("INSERT INTO customerpayments (TransactionDate, Tenant_Id, Amount)
+			SELECT
+			rl.date_end AS TransactionDate,
+			rl.tenant_id,
+			rl.billing_amount AS Amount
+			FROM
+			rent_list rl
+			JOIN
+			tenants t ON rl.tenant_id = t.id where rl.id='{$id}'");
+
 		if($update){
 			$resp['status'] = 'success';
 			$this->settings->set_flashdata('success'," Rent successfully renewed.");
+			if ($customerpayment) {
+				$resp['status'] = 'success';
+				$this->settings->set_flashdata('success'," Rent successfully renewed.");
+			}else{
+				$resp['status'] = 'failed';
+				$resp['error'] = $this->conn->error.'Failed to record transaction But rent has been renewed';
+			}
 		}else{
 			$resp['status'] = 'failed';
 			$resp['error'] = $this->conn->error;
