@@ -31,6 +31,7 @@
 							<th>Tenant Name</th>
 							<th>Details</th>
 							<th>Status</th>
+							<th>Amount Due</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -86,6 +87,20 @@
 									}
 									?>
 								</td>
+								<td>
+									<?php
+									$qry1 = $conn->query("SELECT (SUM(rl.billing_amount) - SUM(cp.Amount)) AS OutstandingBalance
+										FROM 
+										customerpayments cp
+										INNER JOIN 
+										rent_list rl ON cp.Tenant_Id = rl.tenant_id
+										WHERE 
+										rl.tenant_id = 49;");
+									while ($row1 = $qry1->fetch_assoc()) {
+										echo $row1['OutstandingBalance'];
+									}
+									?>
+								</td>
 								<td align="center">
 									<button type="button" class="btn btn-flat btn-default btn-sm dropdown-toggle dropdown-icon" data-toggle="dropdown">
 										Action
@@ -95,7 +110,7 @@
 										<a class="dropdown-item view_tenant_data" href="javascript:void(0)" data-id = "<?php echo $row['tenant_id'] ?>"><span class="fa fa-info text-primary"></span>Tenants Details</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item view_property_data" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>"><span class="fa fa-info text-primary"></span> Property Details</a>
-				                    <div class="dropdown-divider"></div>
+										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="?page=rents/manage_rent&id=<?php echo $row['id'] ?>"><span class="fa fa-edit text-primary"></span> Edit</a>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item renew_data" href="javascript:void(0)" data-id= "<?php echo $row['id'] ?>"><span class="fa fa-retweet text-primary"></span> Renew</a>

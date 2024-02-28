@@ -74,7 +74,7 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
-                      <a href="<?php echo base_url ?>admin/?page=payments/collections" class="nav-link nav-maintenance_storage_units">
+                      <a href="<?php echo base_url ?>admin/?page=payments/collections" class="nav-link nav-collections">
                         <i class="nav-icon fas fa-usd"></i>
                         <p>
                            Collections Report

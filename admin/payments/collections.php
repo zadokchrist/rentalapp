@@ -35,7 +35,7 @@
 						<?php 
 						$i = 1;
 						$qry = $conn->query("SELECT 
-							DATE_FORMAT(cp.TransactionDate, '%M') AS MonthName,
+							DATE_FORMAT(cp.RecordDate, '%M') AS MonthName,
 							COUNT(cp.TransactionId) AS NumberOfPayments,
 							SUM(cp.Amount) AS TotalTransactionValue,
 							(SUM(rl.billing_amount) - SUM(cp.Amount)) AS OutstandingBalance
@@ -44,9 +44,9 @@
 							INNER JOIN 
 							rent_list rl ON cp.Tenant_Id = rl.tenant_id
 							WHERE 
-							MONTH(cp.TransactionDate) = MONTH(rl.date_end)
+							MONTH(cp.RecordDate) = MONTH(rl.date_end)
 							GROUP BY 
-							MONTH(cp.TransactionDate); ");
+							MONTH(cp.RecordDate); ");
 						while($row = $qry->fetch_assoc()):
 							?>
 							<tr>
